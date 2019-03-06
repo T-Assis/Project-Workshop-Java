@@ -3,6 +3,8 @@ package br.com.projetcworkshop.domain;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import br.com.projetcworkshop.domain.enums.StatusPagamento;
 
@@ -10,7 +12,10 @@ import br.com.projetcworkshop.domain.enums.StatusPagamento;
 public class PagamentoBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataVencimento;
+	
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataPagamento;
 	
 	public PagamentoBoleto() {

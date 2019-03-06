@@ -13,6 +13,7 @@ import br.com.projetcworkshop.domain.Cidade;
 import br.com.projetcworkshop.domain.Cliente;
 import br.com.projetcworkshop.domain.Endereco;
 import br.com.projetcworkshop.domain.Estado;
+import br.com.projetcworkshop.domain.ItemPedido;
 import br.com.projetcworkshop.domain.Pagamento;
 import br.com.projetcworkshop.domain.PagamentoBoleto;
 import br.com.projetcworkshop.domain.PagamentoCartao;
@@ -25,37 +26,41 @@ import br.com.projetcworkshop.repositories.CidadeRepository;
 import br.com.projetcworkshop.repositories.ClienteRepository;
 import br.com.projetcworkshop.repositories.EnderecoRepository;
 import br.com.projetcworkshop.repositories.EstadoRepository;
+import br.com.projetcworkshop.repositories.ItemPedidoRepository;
 import br.com.projetcworkshop.repositories.PagamentoRepository;
 import br.com.projetcworkshop.repositories.PedidoRepository;
 import br.com.projetcworkshop.repositories.ProdutoRepository;
 
 @SpringBootApplication
-public class ProjectWorkshopJavaApplication implements CommandLineRunner{
-	
+public class ProjectWorkshopJavaApplication implements CommandLineRunner {
+
 	@Autowired
 	private CategoriaRepository categoriaRepository;
-	
+
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
+
 	@Autowired
 	private CidadeRepository cidadeRepository;
-	
+
 	@Autowired
 	private EstadoRepository estadoRepository;
-	
+
 	@Autowired
 	private ClienteRepository clienteRepository;
-	
+
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Autowired
-	private PedidoRepository pedidoRepositoryo;
-	
+	private PedidoRepository pedidoRepository;
+
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
 	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectWorkshopJavaApplication.class, args);
 	}
@@ -109,17 +114,29 @@ public class ProjectWorkshopJavaApplication implements CommandLineRunner{
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
 		
-		Pagamento pagto1 = new PagamentoCartao(null, StatusPagamento.QUITADO, ped1, 6);	
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		Pagamento pagto1 = new PagamentoCartao(null, StatusPagamento.QUITADO, ped1, 6);
 		ped1.setPagamento(pagto1);
 		
 		Pagamento pagto2 = new PagamentoBoleto(null, StatusPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
 		ped2.setPagamento(pagto2);
 		
-		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
-		
-		pedidoRepositoryo.saveAll(Arrays.asList(ped1, ped2));
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 00.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 00.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 		
 	}
 
