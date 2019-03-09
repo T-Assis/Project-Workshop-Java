@@ -2,6 +2,7 @@ package br.com.projetcworkshop.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.projetcworkshop.domain.Categoria;
+import br.com.projetcworkshop.dto.CategoriaDTO;
 import br.com.projetcworkshop.services.CategoriaService;
 
 @RestController
@@ -26,9 +28,10 @@ public class CategoriaResource {
 	private CategoriaService service;
 
 	@GetMapping
-	public ResponseEntity<List<Categoria>> findAll() {
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
 		List<Categoria> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<CategoriaDTO> listDto = list.stream().map(categoria -> new CategoriaDTO(categoria)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@GetMapping(value = "/{id}")
