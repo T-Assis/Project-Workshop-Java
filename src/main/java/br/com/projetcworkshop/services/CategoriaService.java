@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.projetcworkshop.domain.Categoria;
+import br.com.projetcworkshop.dto.CategoriaDTO;
 import br.com.projetcworkshop.repositories.CategoriaRepository;
 import br.com.projetcworkshop.services.exception.DataIntegrityException;
 import br.com.projetcworkshop.services.exception.ObjectNotFoundException;
@@ -52,6 +53,10 @@ public class CategoriaService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível deletar uma Categoria que possuí Produtos!");
 		}
+	}
+	
+	public Categoria fromDTO(CategoriaDTO categoriaDto) {
+		return new Categoria(categoriaDto.getId(), categoriaDto.getNome());
 	}
 
 }
