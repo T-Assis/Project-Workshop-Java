@@ -26,14 +26,14 @@ public class CategoriaService {
 		return repository.findAll();
 	}
 
-	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repository.findAll(pageRequest);
-	}
-
 	public Categoria findById(Integer id) {
 		Optional<Categoria> categoria = repository.findById(id);
 		return categoria.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id));
+	}
+	
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repository.findAll(pageRequest);
 	}
 
 	public Categoria insert(Categoria categoria) {
@@ -41,10 +41,12 @@ public class CategoriaService {
 		return repository.save(categoria);
 	}
 
-	public Categoria update(Categoria categoria) {
-		findById(categoria.getId());
-		return repository.save(categoria);
+	public Categoria update(Categoria cliente) {
+		Categoria newCategoria = findById(cliente.getId());
+		updateData(newCategoria, cliente);
+		return repository.save(newCategoria);
 	}
+
 
 	public void delete(Integer id) {
 		findById(id);
@@ -59,4 +61,9 @@ public class CategoriaService {
 		return new Categoria(categoriaDto.getId(), categoriaDto.getNome());
 	}
 
+	private void updateData(Categoria newCategoria, Categoria categoria) {
+		newCategoria.setNome(categoria.getNome());
+		
+	}
+	
 }
