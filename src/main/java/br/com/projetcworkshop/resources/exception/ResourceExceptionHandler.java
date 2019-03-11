@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -24,6 +26,18 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> dataIntegrity(DataIntegrityException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError error = new StandardError(System.currentTimeMillis(), status.value(), "Não Encontrado", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		ValidationError error = new ValidationError(System.currentTimeMillis(), status.value(), "Não Encontrado", "Erro de validação", request.getRequestURI());
+		
+		for (FieldError x : e.getBindingResult().getFieldErrors()) {
+			error.addError(x.getField(), x.getDefaultMessage());
+		}
+		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 	
