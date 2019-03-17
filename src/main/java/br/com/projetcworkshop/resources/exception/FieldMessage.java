@@ -8,9 +8,7 @@ public class FieldMessage implements Serializable {
 	private String fieldName;
 	private String message;
 	
-	
 	public FieldMessage() {
-		
 	}
 
 	public FieldMessage(String fieldName, String message) {
@@ -23,7 +21,7 @@ public class FieldMessage implements Serializable {
 		return fieldName;
 	}
 
-	public void setNomeCampo(String fieldName) {
+	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
 
@@ -31,11 +29,7 @@ public class FieldMessage implements Serializable {
 		return message;
 	}
 
-	public void setMensagem(String message) {
+	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
-	
-
 }
