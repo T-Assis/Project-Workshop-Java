@@ -6,9 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import br.com.projetcworkshop.domain.enums.StatusPagamento;
 
 @Entity
+@JsonTypeName("pagamentoComBoleto")
 public class PagamentoBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
