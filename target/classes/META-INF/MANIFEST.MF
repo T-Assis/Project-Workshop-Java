@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Built-By: tassis
-Build-Jdk: 11.0.2
+Build-Jdk: 11.0.3
 Implementation-Title: Project-Workshop-Java
 Implementation-Version: 0.0.1-SNAPSHOT
 Implementation-Vendor-Id: br.com.projetcworkshop
