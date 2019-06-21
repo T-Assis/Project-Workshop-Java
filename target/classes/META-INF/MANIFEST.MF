@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
-Built-By: tassis
-Build-Jdk: 11.0.3
 Implementation-Title: Project-Workshop-Java
 Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: thales.lima.de.assis
 Implementation-Vendor-Id: br.com.projetcworkshop
-Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
- -starter-parent/Project-Workshop-Java
+Build-Jdk: 1.8.0_181
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/Project-Workshop-Java
 Created-By: Maven Integration for Eclipse
 
