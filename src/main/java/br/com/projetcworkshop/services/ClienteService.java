@@ -1,5 +1,6 @@
 package br.com.projetcworkshop.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.projetcworkshop.domain.Cidade;
 import br.com.projetcworkshop.domain.Cliente;
@@ -38,6 +40,9 @@ public class ClienteService {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	public List<Cliente> findAll() {
 		return repository.findAll();
@@ -109,6 +114,10 @@ public class ClienteService {
 		newCliente.setNome(cliente.getNome());
 		newCliente.setEmail(cliente.getEmail());
 
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 
 }
