@@ -52,6 +52,9 @@ public class ClienteService {
 	@Value("${img.prefix.client.profile}")
 	private String imagePrefix;
 	
+	@Value("${img.profile.size}")
+	private Integer sizeImage;
+	
 	public List<Cliente> findAll() {
 		return repository.findAll();
 	}
@@ -130,7 +133,12 @@ public class ClienteService {
 		}
 		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resizeImage(jpgImage, sizeImage);
+		
 		String fileName = imagePrefix + userSS.getId() + ".jpg";
+		
 		return s3Service.uploadFile(imageService.getInputStrem(jpgImage, "jpg"), fileName, "image");
 
 	}
