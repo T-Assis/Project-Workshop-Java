@@ -55,8 +55,6 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
-	private String imagemURL;
-	
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);
 
@@ -153,14 +151,6 @@ public class Cliente implements Serializable {
 		this.pedidos = pedidos;
 	}
 
-	public String getImagemURL() {
-		return imagemURL;
-	}
-
-	public void setImagemURL(String imagemURL) {
-		this.imagemURL = imagemURL;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
