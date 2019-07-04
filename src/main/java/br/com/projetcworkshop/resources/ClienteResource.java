@@ -44,8 +44,8 @@ public class ClienteResource {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Cliente> findById(@PathVariable Integer id) {
-		Cliente categoria = service.findById(id);
-		return ResponseEntity.ok().body(categoria);
+		Cliente cliente = service.findById(id);
+		return ResponseEntity.ok().body(cliente);
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
@@ -58,6 +58,13 @@ public class ClienteResource {
 		Page<ClienteDTO> pageListDTO = pageList.map(categoria -> new ClienteDTO(categoria));
 		return ResponseEntity.ok().body(pageListDTO);
 	}
+	
+	@GetMapping(value = "/email")
+	public ResponseEntity<Cliente> findByEmail(@RequestParam(value = "email") String email) {
+		Cliente cliente = service.findByEmail(email);
+		return ResponseEntity.ok().body(cliente);
+	}
+	
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
